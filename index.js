@@ -1,49 +1,62 @@
 const fs = require('fs');
 const fetch = require("node-fetch");
+const pathName = process.argv[2];
+//let regex = /https?:\S+\w/g
 
-//function to read an md file
-  fs.readFile(process.argv[2],'utf-8',(err, data) => {
+const read = (pathName) => {
+  return new Promise(function(reject, resolve) {
+  fs.readFile(pathName,'utf-8',(err, data) => {
     if (err) {
       console.log('error :' , err);
-      return false;
+      return reject
     }else {
       console.log("Markdown file is found"); 
-     print_links (data) 
-       return true;
+     //print_links (data) 
+       return resolve
     }
   });
+})
+}
 
-   
- 
-// start the function to validate plain text links with regular expressions
-  let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))/g;
-
-  function print_links(data){
-    if(regex.test(data)){
-      console.log("content links");
-      console.log(data.match(regex).map(link => link));
-      return true;
-
-    }else {
-      console.log("no content links");
-      return false;
-    }
+/*
+const print_links = (data) => {
+  return new Promise(function(reject, resolve){
+if(regex.test(data)){
+const alllinks= ( data.match(regex).map(link => link));
+  return resolve
+}else{
+  console.log('no content links ');
+  return reject
+}
   }
+  )}
+  */
 
-  const bringInf = function () {
-    fetch('https://github.com/Lesly-z-c/GDL003-md-links')
+//let alllinks = link => link;
+  const validate_Links =  function () {
+    fs.readFile(pathName,'utf-8',(err, data) => {
+    const alllinks = (data.match(/https?:\S+\w/g).map(link => link)); 
+    console.log(alllinks.length) 
+    for (let i = 0; i<alllinks.length; i++){
+      fetch(alllinks[i])
     .then(function(response) {
-      console.log(response.status)
+      if(response.status ===200 ){
+        console.log(`status ${response.status}  link${alllinks[i]} ` )
+
+      } 
       return response;
     }).catch((err) => {
       console.log(err.message)
       return err
     })
+    }})
   }
 
-  bringInf();
 
+read(pathName).then(() => {
+  print_links()
+})
 
+validate_Links();
 
-
-
+module.exports = read, validate_Links;
