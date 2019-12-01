@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.0"
+  },
+  "bin": {
+    "active-links": "./bin/cli.js"
   }
 }
