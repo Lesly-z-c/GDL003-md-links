@@ -25,13 +25,13 @@ Puedes ejecutar esta librería de la siguiente manera :
 
 2- Ejecuta el siguiente comando :
 
-   `-- node index nombredelarchivo.md --`
+   `-- node index archivo.md --`
 
   ejemplo :
 
     `--node index README.md--`s
 
-3- Presiona enter y en tu cli aparecerá una lista de todos los 
+3- Presiona enter y en tu CLI aparecerá una lista de todos los 
     links encontrados, junto con el status,si esta activo o no, nombre del enlace, ruta 
     del archivo donde se encontró, y estadísticas de cuantos links se encontraron en total, 
     cuantos son hábiles y cuantos no. 
